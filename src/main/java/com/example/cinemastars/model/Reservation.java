@@ -2,19 +2,29 @@ package com.example.cinemastars.model;
 
 import lombok.Data;
 
-@Data
-public class Reservation {
+import javax.persistence.*;
+import java.util.List;
 
+@Data
+@Entity
+public class Reservation {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
     private User user;
 
-    private Seat seats;
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Seat> seats;
 
+    @ManyToOne
     private Projection projection;
 
-    public Reservation(Long id, User user, Seat seats, Projection projection) {
-        this.id = id;
+    public Reservation() {
+    }
+
+    public Reservation(User user, List<Seat> seats, Projection projection) {
         this.user = user;
         this.seats = seats;
         this.projection = projection;

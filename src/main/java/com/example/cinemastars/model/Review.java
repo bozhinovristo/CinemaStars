@@ -2,17 +2,24 @@ package com.example.cinemastars.model;
 
 import lombok.Data;
 
-@Data
-public class Review {
+import javax.persistence.*;
 
+@Data
+@Entity
+public class Review {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Double rating;
 
+    @ManyToOne
     private Movie movie;
 
-    public Review(Long id, Double rating, Movie movie) {
-        this.id = id;
+    public Review() {
+    }
+
+    public Review(Double rating, Movie movie) {
         this.rating = rating;
         this.movie = movie;
     }

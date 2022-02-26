@@ -2,18 +2,29 @@ package com.example.cinemastars.model;
 
 import lombok.Data;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 @Data
+@Entity
 public class User {
 
-    private Long id;
+    @Id
+    private String username;
+
+    private String password;
 
     private String name;
 
     private String surname;
 
-    public User(Long id, String name, String surname) {
-        this.id = id;
+    public User() {
+    }
+
+    public User(String name, String surname, String username, String password) {
         this.name = name;
         this.surname = surname;
+        this.username = username;
+        this.password = password;
     }
 }
