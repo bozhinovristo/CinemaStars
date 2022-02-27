@@ -10,4 +10,6 @@ public interface MovieService {
     public Movie save(String name, Integer duration, String directorName, String directorSurname, List<Long> genreIds, String imageUrl);
     public Movie findById(Long id);
     public List<Movie> findAll();
+    public Movie update(Long id, String name, Integer duration, String directorName, String directorSurname, List<Long> genreIds, String imageUrl);
+    public void delete(Long id);
 }

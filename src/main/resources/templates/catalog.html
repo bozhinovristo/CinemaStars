@@ -4,7 +4,13 @@
     <title>WP Exam</title>
 </head>
 <body>
-
+<div>
+    <th:block>
+        <a href="/movies/add" class="add-item">
+            Add
+        </a>
+    </th:block>
+</div>
 <div>
     <table>
         <tr>
@@ -20,25 +26,14 @@
             <td>
                 <span class="item-rel" th:each="genre : ${movie.getGenre()}"> <th:block th:text="${genre.getName()}"/></span>
             </td>
-            <!--            <td>-->
-            <!--                <th:block>-->
-            <!--                    &lt;!&ndash; DiscussionController.delete (Only MASTER can see this element)&ndash;&gt;-->
-            <!--                    <form th:method="post" th:action="@{'/discussions/{id}/delete' (id=${dis.getId()})}"-->
-            <!--                          sec:authorize="hasRole('ROLE_MASTER')">-->
-            <!--                        <button type="submit" class="delete-item">Delete</button>-->
-            <!--                    </form>-->
-            <!--                    &lt;!&ndash; DiscussionController.showEdit (Only MASTER can see this element)&ndash;&gt;-->
-            <!--                    <a class="edit-item" th:href="@{'/discussions/{id}/edit' (id=${dis.getId()})}"-->
-            <!--                       sec:authorize="hasRole('ROLE_MASTER')">Edit</a>-->
-
-            <!--                </th:block>-->
-            <!--                &lt;!&ndash; DiscussionController.markPopular (Visible only when the discussion is not already popular)&ndash;&gt;-->
-            <!--                <form th:method="post" th:action="@{'/discussions/{id}/mark_popular' (id=${dis.getId()})}"-->
-            <!--                      th:if="${dis.getPopular()==false}"-->
-            <!--                >-->
-            <!--                    <button class="change-item">Mark as popular</button>-->
-            <!--                </form>-->
-            <!--            </td>-->
+                        <td>
+                            <th:block>
+                                <form th:method="post" th:action="@{'/movies/{id}/delete' (id=${movie.getId()})}">
+                                    <button type="submit" class="delete-item">Delete</button>
+                                </form>
+                                <a class="edit-item" th:href="@{'/movies/{id}/edit' (id=${movie.getId()})}">Edit</a>
+                            </th:block>
+                        </td>
         </tr>
     </table>
 

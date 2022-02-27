@@ -35,6 +35,31 @@ public class MovieServiceImpl implements MovieService{
         Movie movie=new Movie(name, duration, director, genres, imageUrl);
         return movieRepository.save(movie);
     }
+    @Override
+    public Movie update(Long id, String name, Integer duration, String directorName, String directorSurname, List<Long> genreIds, String imageUrl) {
+        Director director;
+        if(directorService.findByNameAndSurname(directorName, directorSurname).isPresent())
+            director=directorService.findByNameAndSurname(directorName, directorSurname).get();
+        else
+            director=directorService.save(directorName, directorSurname);
+
+        List<Genre> genres=genreRepository.findAllById(genreIds);
+
+        Movie movie=this.findById(id);
+        movie.setName(name);
+        movie.setDuration(duration);
+        movie.setDirector(director);
+        movie.setGenre(genres);
+        movie.setImageUrl(imageUrl);
+
+        return movieRepository.save(movie);
+    }
+
+    @Override
+    public void delete(Long id) {
+        Movie movie=movieRepository.findById(id).get();
+        this.movieRepository.delete(movie);
+    }
 
     @Override
     public Movie findById(Long id) {

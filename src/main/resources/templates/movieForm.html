@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>WP Exam</title>
+</head>
+<body>
+<!-- The form should submit to DiscussionController.create or DiscussionController.update,
+     depending on whether we are creating or editing an entity -->
+<form th:method="post" th:action="@{'/movies/{id}' (id=${movie?.id})}">
+    <div>
+        <label for="f1">Name</label>
+        <input type="text"
+               id="f1"
+               name="name"
+               th:value="(${movie} != null ? ${movie.getName()} : '')"
+               required>
+    </div>
+    <div>
+        <label for="f2">Duration</label>
+        <input type="number"
+               id="f2"
+               name="duration"
+               th:value="(${movie} != null ? ${movie.getDuration()} : '')"
+               required>
+    </div>
+    <div>
+        <label for="f6">Director Name</label>
+        <input type="text"
+               id="f6"
+               name="directorName"
+               th:value="(${movie} != null ? ${movie.getDirector().getName()} : '')"
+               required>
+    </div>
+    <div>
+        <label for="f11">Director Surname</label>
+        <input type="text"
+               id="f11"
+               name="directorSurname"
+               th:value="(${movie} != null ? ${movie.getDirector().getSurname()} : '')"
+               required>
+    </div>
+    <div>
+        <label for="f12">Image</label>
+        <input type="text"
+               id="f12"
+               name="imageUrl"
+               th:value="(${movie} != null ? ${movie.getImageUrl()} : '')">
+    </div>
+    <div>
+        <label>Genre</label><br/>
+        <select id="f5" name="genreIds" multiple>
+            <!-- For each participant you should have one <option> like below  -->
+            <!--            <option> [participant.username]</option>-->
+            <option th:if="${movie} == null"
+                    th:each="genre: ${genres}"
+                    th:value="${genre.getId()}"
+                    th:text="${genre.getName()}">
+            </option>
+            <option th:if="${movie} != null"
+                    th:each="genre: ${genres}"
+                    th:selected="${movie.getGenre().contains(genre)}"
+                    th:value="${genre.getId()}"
+                    th:text="${genre.getName()}">
+            </option>
+        </select>
+    </div>
+
+    <button id="submit" type="submit">Submit</button>
+    <a id="back" href="/movies" type="button" class="btn btn-primary">Back to movies</a>
+</form>
+
+<div>
+    <ul id="nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/logout">Logout</a></li>
+        <input type="hidden" id="f3" value="f3" required>
+    </ul>
+</div>
+
+</body>
+</html>
