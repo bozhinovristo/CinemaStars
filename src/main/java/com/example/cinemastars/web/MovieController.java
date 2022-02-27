@@ -2,14 +2,14 @@ package com.example.cinemastars.web;
 
 import com.example.cinemastars.model.Genre;
 import com.example.cinemastars.model.Movie;
+import com.example.cinemastars.model.Projection;
 import com.example.cinemastars.service.GenreService;
 import com.example.cinemastars.service.MovieService;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.example.cinemastars.service.ProjectionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -17,10 +17,12 @@ import java.util.List;
 public class MovieController {
     private final MovieService movieService;
     private final GenreService genreService;
+    private final ProjectionService projectionService;
 
-    public MovieController(MovieService movieService, GenreService genreService) {
+    public MovieController(MovieService movieService, GenreService genreService, ProjectionService projectionService) {
         this.movieService = movieService;
         this.genreService = genreService;
+        this.projectionService = projectionService;
     }
 
     @GetMapping({"/","/movies"})
@@ -41,6 +43,8 @@ public class MovieController {
     {
         Movie movie=movieService.findById(id);
         model.addAttribute("movie", movie);
+        List<Projection> projections=projectionService.findAllByMovie(movie);
+        model.addAttribute("projections", projections);
         return "movie";
     }
 
@@ -59,9 +63,7 @@ public class MovieController {
         model.addAttribute("genres", genres);
         return "movieForm";
     }
-    /**
-     * This method should add an entity given the arguments it takes.
-     */
+
     @PostMapping("/movies")
     public String create(@RequestParam String name,
                          @RequestParam Integer duration,
@@ -73,9 +75,6 @@ public class MovieController {
         return "redirect:/movies";
     }
 
-    /**
-     * This method should update an entity given the arguments it takes.
-     */
     @PostMapping("/movies/{id}")
     public String update(@PathVariable Long id,
                          @RequestParam String name,
@@ -88,9 +87,6 @@ public class MovieController {
         return "redirect:/movies";
     }
 
-    /**
-     * This method should delete the entity that has the appropriate identifier.
-     */
     @PostMapping("/movies/{id}/delete")
     public String delete(@PathVariable Long id) {
         this.movieService.delete(id);

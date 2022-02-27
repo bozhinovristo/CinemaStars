@@ -1,6 +1,7 @@
 package com.example.cinemastars.config;
 
 import com.example.cinemastars.model.Genre;
+import com.example.cinemastars.model.Projection;
 import com.example.cinemastars.service.*;
 import org.springframework.stereotype.Component;
 
@@ -42,16 +43,17 @@ public class DataInitializer {
         this.initMovies();
 
         for (int i = 1; i <=6; i++) {
-            this.projectionService.save( (double)i%3+1,
+
+            Projection projection=this.projectionService.save( (double)(i%3+1)*2,
                     Timestamp.valueOf(LocalDateTime.now().plusDays(i)),
                     (long) i%3+1,
                     (long) i%3+1);
+            int numberOfSeats=projection.getHall().getNumberOfSeats();
+            for (int j=1;j<=numberOfSeats;j++)
+            {
+                this.seatService.save(j, projection.getId());
+            }
         }
-
-        this.seatService.save(1, (long)1);
-        this.seatService.save(2, (long)1);
-        this.seatService.save(1, (long)2);
-        this.seatService.save(2, (long)2);
 
     }
 
@@ -108,14 +110,5 @@ public class DataInitializer {
                         genreService.findByName("Adventure").getId()).collect(Collectors.toList()),
                 "The tourist.jpg"
         );
-//        for (int i = 1; i < 11; i++) {
-//            this.movieService.save(
-//                    "Movie: " + i,
-//                    i,
-//                    "directorName",
-//                    "directorSurname",
-//                    Stream.of(genres.get((i - 1) % 5).getId(), genres.get((i + 1) % 5).getId()).collect(Collectors.toList())
-//            );
-//        }
     }
 }

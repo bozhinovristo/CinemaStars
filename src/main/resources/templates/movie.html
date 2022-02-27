@@ -24,6 +24,22 @@
             <td>
                 <span class="item-rel" th:each="genre : ${movie.getGenre()}"> <th:block th:text="${genre.getName()}"/></span>
             </td>
+        </tr>
+    </table>
+
+</div>
+<div>
+    <table>
+        <tr>
+            <th>Date & Time</th>
+            <th>Hall</th>
+            <th>Price</th>
+        </tr>
+        <tr class="item" th:each="proj :${projections}">
+            <td th:text="${proj.getTimestamp()}"></td>
+            <td th:text="${proj.getHall().getName()}"></td>
+            <td th:text="${proj.getPrice()}"></td>
+
             <!--            <td>-->
             <!--                <th:block>-->
             <!--                    &lt;!&ndash; DiscussionController.delete (Only MASTER can see this element)&ndash;&gt;-->
@@ -47,6 +63,5 @@
     </table>
 
 </div>
-
 </body>
 </html>

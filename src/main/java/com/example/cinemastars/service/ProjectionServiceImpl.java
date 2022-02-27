@@ -7,6 +7,7 @@ import com.example.cinemastars.repository.ProjectionRepository;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Service
 public class ProjectionServiceImpl implements ProjectionService{
@@ -33,6 +34,11 @@ public class ProjectionServiceImpl implements ProjectionService{
     public Projection findById(Long id) {
         Projection projection=projectionRepository.getById(id);
         return projection;
+    }
+
+    @Override
+    public List<Projection> findAllByMovie(Movie movie) {
+        return projectionRepository.findAllByMovie(movie);
     }
 
 }

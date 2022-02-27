@@ -15,12 +15,15 @@ public class Seat {
     @Id
     private Long projectionId;
 
+    private Boolean reserved;
+
     public Seat() {
 
     }
     public Seat(Integer seatNumber,  Long projectionId) {
         this.seatNumber = seatNumber;
         this.projectionId = projectionId;
+        this.reserved=false;
     }
 }
 
