@@ -24,4 +24,5 @@ public class UserServiceImpl implements UserService{
     public User findById(String username) {
         return userRepository.getById(username);
     }
+
 }

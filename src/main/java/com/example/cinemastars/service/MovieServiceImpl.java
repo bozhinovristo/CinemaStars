@@ -23,7 +23,7 @@ public class MovieServiceImpl implements MovieService{
     }
 
     @Override
-    public Movie save(String name, Integer duration, String directorName, String directorSurname, List<Long> genreIds) {
+    public Movie save(String name, Integer duration, String directorName, String directorSurname, List<Long> genreIds, String imageUrl) {
         Director director;
         if(directorService.findByNameAndSurname(directorName, directorSurname).isPresent())
             director=directorService.findByNameAndSurname(directorName, directorSurname).get();
@@ -32,7 +32,7 @@ public class MovieServiceImpl implements MovieService{
 
         List<Genre> genres=genreRepository.findAllById(genreIds);
 
-        Movie movie=new Movie(name, duration, director, genres);
+        Movie movie=new Movie(name, duration, director, genres, imageUrl);
         return movieRepository.save(movie);
     }
 

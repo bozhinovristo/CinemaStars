@@ -13,6 +13,8 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String imageUrl;
+
     private String name;
 
     private Integer duration;
@@ -29,12 +31,13 @@ public class Movie {
     public Movie() {
     }
 
-    public Movie(String name, Integer duration, Director director, List<Genre> genre) {
+    public Movie(String name, Integer duration, Director director, List<Genre> genre, String imageUrl) {
         this.name = name;
         this.duration = duration;
         this.director = director;
         this.genre = genre;
         this.projection=new ArrayList<>();
+        this.imageUrl=imageUrl;
     }
 
     public Long getId() {
@@ -59,5 +62,37 @@ public class Movie {
 
     public List<Projection> getProjection() {
         return projection;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
+    public void setDirector(Director director) {
+        this.director = director;
+    }
+
+    public void setGenre(List<Genre> genre) {
+        this.genre = genre;
+    }
+
+    public void setProjection(List<Projection> projection) {
+        this.projection = projection;
     }
 }

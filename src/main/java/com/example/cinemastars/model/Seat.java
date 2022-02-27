@@ -6,19 +6,22 @@ import javax.persistence.*;
 
 @Data
 @Entity
+@IdClass(SeatId.class)
+
 public class Seat {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seatNumber;
-    @ManyToOne
-    private Projection projection;
+
+    @Id
+    private Long projectionId;
 
     public Seat() {
 
     }
-    public Seat(Integer seatNumber,  Projection projection) {
+    public Seat(Integer seatNumber,  Long projectionId) {
         this.seatNumber = seatNumber;
-        this.projection = projection;
+        this.projectionId = projectionId;
     }
-
 }
+
+

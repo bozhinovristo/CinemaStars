@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>WP Exam</title>
+</head>
+<body>
+<nav>
+    <a th:href="@{/movies}">Movies</a>
+</nav>
+<div>
+    <table>
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Director</th>
+            <th>Duration</th>
+            <th>Genre</th>
+        </tr>
+        <tr class="item" >
+            <td><img th:src="@{'/pictures/{name}'(name=${movie.getImageUrl()})}" height="100px"></td>
+            <td th:text="${movie.getName()}"></td>
+            <td th:text="${movie.getDirector().toString()}"></td>
+            <td th:text="${movie.getDuration()}"></td>
+            <td>
+                <span class="item-rel" th:each="genre : ${movie.getGenre()}"> <th:block th:text="${genre.getName()}"/></span>
+            </td>
+            <!--            <td>-->
+            <!--                <th:block>-->
+            <!--                    &lt;!&ndash; DiscussionController.delete (Only MASTER can see this element)&ndash;&gt;-->
+            <!--                    <form th:method="post" th:action="@{'/discussions/{id}/delete' (id=${dis.getId()})}"-->
+            <!--                          sec:authorize="hasRole('ROLE_MASTER')">-->
+            <!--                        <button type="submit" class="delete-item">Delete</button>-->
+            <!--                    </form>-->
+            <!--                    &lt;!&ndash; DiscussionController.showEdit (Only MASTER can see this element)&ndash;&gt;-->
+            <!--                    <a class="edit-item" th:href="@{'/discussions/{id}/edit' (id=${dis.getId()})}"-->
+            <!--                       sec:authorize="hasRole('ROLE_MASTER')">Edit</a>-->
+
+            <!--                </th:block>-->
+            <!--                &lt;!&ndash; DiscussionController.markPopular (Visible only when the discussion is not already popular)&ndash;&gt;-->
+            <!--                <form th:method="post" th:action="@{'/discussions/{id}/mark_popular' (id=${dis.getId()})}"-->
+            <!--                      th:if="${dis.getPopular()==false}"-->
+            <!--                >-->
+            <!--                    <button class="change-item">Mark as popular</button>-->
+            <!--                </form>-->
+            <!--            </td>-->
+        </tr>
+    </table>
+
+</div>
+
+</body>
+</html>

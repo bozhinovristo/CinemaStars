@@ -4,7 +4,9 @@
     <title>WP Exam</title>
 </head>
 <body>
-
+<nav>
+    <a th:href="@{/catalog}">Movies</a>
+</nav>
 <div>
     <table>
         <tr>
@@ -13,13 +15,11 @@
             <th>Duration</th>
             <th>Genre</th>
         </tr>
-        <!-- For each discussion you should have one <tr> like below -->
         <tr class="item" th:each="movie : ${movies}">
-            <td th:text="${movie.getName()}"></td>
+            <td ><a th:href="@{'/movies/{id}' (id=${movie.getId()})}"><th:block th:text="${movie.getName()}"/></a></td>
             <td th:text="${movie.getDirector().toString()}"></td>
             <td th:text="${movie.getDuration()}"></td>
             <td>
-                <!-- For each of the discussion.participants show the following element-->
                 <span class="item-rel" th:each="genre : ${movie.getGenre()}"> <th:block th:text="${genre.getName()}"/></span>
             </td>
 <!--            <td>-->
