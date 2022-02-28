@@ -25,6 +25,30 @@ public class Seat {
         this.projectionId = projectionId;
         this.reserved=false;
     }
+
+    public Integer getSeatNumber() {
+        return seatNumber;
+    }
+
+    public void setSeatNumber(Integer seatNumber) {
+        this.seatNumber = seatNumber;
+    }
+
+    public Long getProjectionId() {
+        return projectionId;
+    }
+
+    public void setProjectionId(Long projectionId) {
+        this.projectionId = projectionId;
+    }
+
+    public Boolean getReserved() {
+        return reserved;
+    }
+
+    public void setReserved(Boolean reserved) {
+        this.reserved = reserved;
+    }
 }
 
 

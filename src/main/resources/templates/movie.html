@@ -36,7 +36,14 @@
             <th>Price</th>
         </tr>
         <tr class="item" th:each="proj :${projections}">
-            <td th:text="${proj.getTimestamp()}"></td>
+
+
+            <td >
+                <a  th:href="@{'/projection/{id}' (id=${proj.getId()})}">
+                <th:block th:text="${proj.getTimestamp()}"/>
+                </a>
+            </td>
+
             <td th:text="${proj.getHall().getName()}"></td>
             <td th:text="${proj.getPrice()}"></td>
 
@@ -59,6 +66,7 @@
             <!--                    <button class="change-item">Mark as popular</button>-->
             <!--                </form>-->
             <!--            </td>-->
+
         </tr>
     </table>
 

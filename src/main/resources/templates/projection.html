@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Projection</title>
+</head>
+<body>
+<nav>
+    <a th:href="@{/movies}">Movies</a>
+</nav>
+<table>
+    <tr>
+        <th>Date & Time</th>
+        <th>Hall</th>
+        <th>Price</th>
+    </tr>
+    <tr class="item" >
+        <td th:text="${projection.getTimestamp()}"></td>
+        <td th:text="${projection.getHall().getName()}"></td>
+        <td th:text="${projection.getPrice()}"></td>
+    </tr>
+</table>
+<div>
+    <form th:method="post" th:action="@{'/seats'}">
+
+        <span th:each="seat : ${seats}">
+            <br th:if="${seat.getSeatNumber()%10==1}">
+            <input type="checkbox" name="seat" th:value="${seat.getSeatNumber()}"
+                   th:disabled="${seat.getReserved()}">
+        </span>
+
+    </form>
+</div>
+</body>
+</html>

@@ -1,13 +1,14 @@
 package com.example.cinemastars.config;
 
-import com.example.cinemastars.model.Genre;
-import com.example.cinemastars.model.Projection;
+import com.example.cinemastars.model.*;
+import com.example.cinemastars.repository.SeatRepository;
 import com.example.cinemastars.service.*;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -21,14 +22,20 @@ public class DataInitializer {
     private final HallService hallService;
     private final ProjectionService projectionService;
     private final SeatService seatService;
+    private final ReservationService reservationService;
+    private final PaymentService paymentService;
+    private final SeatRepository seatRepository;
 
-    public DataInitializer(UserService userService, GenreService genreService, MovieService movieService, HallService hallService, ProjectionService projectionService, SeatService seatService) {
+    public DataInitializer(UserService userService, GenreService genreService, MovieService movieService, HallService hallService, ProjectionService projectionService, SeatService seatService, ReservationService reservationService, PaymentService paymentService, SeatRepository seatRepository) {
         this.userService = userService;
         this.genreService = genreService;
         this.movieService = movieService;
         this.hallService = hallService;
         this.projectionService = projectionService;
         this.seatService = seatService;
+        this.reservationService = reservationService;
+        this.paymentService = paymentService;
+        this.seatRepository = seatRepository;
     }
 
     @PostConstruct
@@ -55,6 +62,20 @@ public class DataInitializer {
             }
         }
 
+        for (int i=1;i<=20;i++)
+        {
+            User user= userService.findById("user"+i%6);
+            Projection projection= projectionService.findById((long)i%6+1);
+            List<Integer> seats=new ArrayList<>();
+            seats.add(i+10);
+            seats.add(i+11);
+            Reservation reservation=reservationService.save(user.getUsername(),seats, projection.getId() );
+            paymentService.save(reservation.getUser().getUsername(), reservation.getId());
+            reservation.getSeats().forEach(s-> {
+                s.setReserved(true);
+                seatRepository.save(s);
+            });
+        }
     }
 
     private void initGenres()
