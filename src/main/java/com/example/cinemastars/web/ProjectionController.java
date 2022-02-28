@@ -1,15 +1,15 @@
 package com.example.cinemastars.web;
 
 import com.example.cinemastars.model.Projection;
+import com.example.cinemastars.model.Reservation;
 import com.example.cinemastars.model.Seat;
 import com.example.cinemastars.service.ProjectionService;
 import com.example.cinemastars.service.SeatService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -32,6 +32,19 @@ public class ProjectionController {
         List<Seat> seats=seatService.findAllByProjectionId(id);
         model.addAttribute("seats", seats);
         return "projection";
+    }
+
+    @PostMapping("/{id}/seats")
+    public String reserve(@PathVariable Long id, @RequestParam List<Integer> seat, HttpSession session, Model model)
+    {
+        System.out.println(seat.toString());
+        session.setAttribute("seats", seat);
+        Projection projection= projectionService.findById(id);
+        session.setAttribute("projection", projection);
+        model.addAttribute("projection", projection);
+        model.addAttribute("seats", seat);
+        model.addAttribute("price", seat.size()* projection.getPrice());
+        return "payment";
     }
 
 }

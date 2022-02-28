@@ -24,9 +24,9 @@ public class DataInitializer {
     private final SeatService seatService;
     private final ReservationService reservationService;
     private final PaymentService paymentService;
-    private final SeatRepository seatRepository;
 
-    public DataInitializer(UserService userService, GenreService genreService, MovieService movieService, HallService hallService, ProjectionService projectionService, SeatService seatService, ReservationService reservationService, PaymentService paymentService, SeatRepository seatRepository) {
+
+    public DataInitializer(UserService userService, GenreService genreService, MovieService movieService, HallService hallService, ProjectionService projectionService, SeatService seatService, ReservationService reservationService, PaymentService paymentService) {
         this.userService = userService;
         this.genreService = genreService;
         this.movieService = movieService;
@@ -35,7 +35,6 @@ public class DataInitializer {
         this.seatService = seatService;
         this.reservationService = reservationService;
         this.paymentService = paymentService;
-        this.seatRepository = seatRepository;
     }
 
     @PostConstruct
@@ -69,11 +68,11 @@ public class DataInitializer {
             List<Integer> seats=new ArrayList<>();
             seats.add(i+10);
             seats.add(i+11);
-            Reservation reservation=reservationService.save(user.getUsername(),seats, projection.getId() );
+            Reservation reservation=reservationService.save(user.getUsername(),seats, projection.getId(), 0.0);
             paymentService.save(reservation.getUser().getUsername(), reservation.getId());
             reservation.getSeats().forEach(s-> {
                 s.setReserved(true);
-                seatRepository.save(s);
+                seatService.save(s);
             });
         }
     }

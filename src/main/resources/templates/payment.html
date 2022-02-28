@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>WP Exam</title>
+</head>
+<body>
+<nav>
+    <a th:href="@{/movies}">Movies</a>
+</nav>
+<div>
+    <table>
+        <tr>
+            <th>Date & Time</th>
+            <th>Hall</th>
+            <th>Price</th>
+        </tr>
+        <tr class="item" >
+            <td th:text="${projection.getTimestamp()}"></td>
+            <td th:text="${projection.getHall().getName()}"></td>
+            <td th:text="${projection.getPrice()}"></td>
+        </tr>
+    </table>
+</div>
+<div>
+    <div>
+        <form th:method="post" th:action="@{'/payment'}">
+
+        <span th:each="seat : ${seats}">
+           <th:block th:text="${seat}"></th:block>
+        </span>
+
+            <div >
+                <th:block th:text="${price}"></th:block> euros
+            </div>
+            <input type="submit" th:value="submit">
+        </form>
+    </div>
+
+</div>
+</body>
+</html>

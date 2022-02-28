@@ -24,6 +24,11 @@ public class SeatServiceImpl implements SeatService{
     }
 
     @Override
+    public Seat save(Seat seat) {
+        return seatRepository.save(seat);
+    }
+
+    @Override
     public List<Seat> findAllByProjectionId(Long projectionId) {
         return seatRepository.findAllByProjectionId(projectionId);
     }

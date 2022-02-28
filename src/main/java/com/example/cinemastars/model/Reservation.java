@@ -21,13 +21,16 @@ public class Reservation {
     @ManyToOne
     private Projection projection;
 
+    private Double price;
+
     public Reservation() {
     }
 
-    public Reservation(User user, List<Seat> seats, Projection projection) {
+    public Reservation(User user, List<Seat> seats, Projection projection, Double price) {
         this.user = user;
         this.seats = seats;
         this.projection = projection;
+        this.price=price;
     }
 
     public Long getId() {
@@ -60,5 +63,13 @@ public class Reservation {
 
     public void setProjection(Projection projection) {
         this.projection = projection;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

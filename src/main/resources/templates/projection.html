@@ -20,14 +20,14 @@
     </tr>
 </table>
 <div>
-    <form th:method="post" th:action="@{'/seats'}">
+    <form th:method="post" th:action="@{'/projection/{id}/seats' (id=${projection.getId()})}">
 
         <span th:each="seat : ${seats}">
             <br th:if="${seat.getSeatNumber()%10==1}">
             <input type="checkbox" name="seat" th:value="${seat.getSeatNumber()}"
                    th:disabled="${seat.getReserved()}">
         </span>
-
+        <input type="submit" th:value="submit">
     </form>
 </div>
 </body>

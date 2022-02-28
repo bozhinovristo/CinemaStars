@@ -24,14 +24,14 @@ public class ReservationServiceImpl implements ReservationService{
     }
 
     @Override
-    public Reservation save(String username, List<Integer> seats, Long projestionId) {
+    public Reservation save(String username, List<Integer> seats, Long projestionId, Double price) {
 
         User user=userService.findById(username);
         Projection projection=projectionService.findById(projestionId);
         List<SeatId> seatIds=seats.stream().map(s->new SeatId(s, projestionId)).collect(Collectors.toList());
         List<Seat> seatList=seatRepository.findAllById(seatIds);
 
-        Reservation reservation=new Reservation(user, seatList, projection);
+        Reservation reservation=new Reservation(user, seatList, projection, price);
         return reservationRepository.save(reservation);
     }
 }
