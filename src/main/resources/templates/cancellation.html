@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cinema Stars</title>
+</head>
+<body>
+<div>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Director</th>
+            <th>Duration</th>
+            <th>Date & Time</th>
+            <th>Hall</th>
+            <th>Genre</th>
+            <th>Seats</th>
+            <th>Price</th>
+        </tr>
+        <tr class="item" th:each="reservation : ${reservations}">
+            <td th:text="${reservation.projection.movie.getName()}"></td>
+            <td th:text="${reservation.projection.movie.getDirector().toString()}"></td>
+            <td th:text="${reservation.projection.movie.getDuration()}"></td>
+            <td th:text="${reservation.projection.getTimestamp()}"></td>
+            <td th:text="${reservation.projection.getHall().getName()}"></td>
+            <td>
+                <span class="item-rel" th:each="genre : ${reservation.projection.movie.getGenre()}"> <th:block th:text="${genre.getName()}"/></span>
+            </td>
+            <td>
+                <span class="item-rel" th:each="seat : ${reservation.seats}"> <th:block th:text="${seat.seatNumber}"/></span>
+            </td>
+            <td th:text="${reservation.price}"></td>
+            <td>
+<!--                <th:block>-->
+<!--                    <form th:method="post" th:action="@{'/movies/{id}/delete' (id=${movie.getId()})}">-->
+<!--                        <button type="submit" class="delete-item">Delete</button>-->
+<!--                    </form>-->
+<!--                </th:block>-->
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+</body>
+</html>
