@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Projection</title>
+    <title>Cinema Stars</title>
 </head>
 <body>
 <nav>
@@ -9,11 +9,13 @@
 </nav>
 <table>
     <tr>
+        <th>Name</th>
         <th>Date & Time</th>
         <th>Hall</th>
         <th>Price</th>
     </tr>
     <tr class="item" >
+        <td th:text="${projection.getMovie().getName()}"></td>
         <td th:text="${projection.getTimestamp()}"></td>
         <td th:text="${projection.getHall().getName()}"></td>
         <td th:text="${projection.getPrice()}"></td>
@@ -27,6 +29,7 @@
             <input type="checkbox" name="seat" th:value="${seat.getSeatNumber()}"
                    th:disabled="${seat.getReserved()}">
         </span>
+        <br>
         <input type="submit" th:value="submit">
     </form>
 </div>

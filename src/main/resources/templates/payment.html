@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>WP Exam</title>
+    <title>Cinema Stars</title>
 </head>
 <body>
 <nav>
@@ -10,11 +10,13 @@
 <div>
     <table>
         <tr>
+            <th>Name</th>
             <th>Date & Time</th>
             <th>Hall</th>
             <th>Price</th>
         </tr>
-        <tr class="item" >
+        <tr class="item">
+            <td th:text="${projection.getMovie().getName()}"></td>
             <td th:text="${projection.getTimestamp()}"></td>
             <td th:text="${projection.getHall().getName()}"></td>
             <td th:text="${projection.getPrice()}"></td>
@@ -23,15 +25,40 @@
 </div>
 <div>
     <div>
-        <form th:method="post" th:action="@{'/payment'}">
+
 
         <span th:each="seat : ${seats}">
-           <th:block th:text="${seat}"></th:block>
+            <th:block th:text="${seat}"></th:block>
         </span>
 
-            <div >
-                <th:block th:text="${price}"></th:block> euros
-            </div>
+        <div>
+            <th:block th:text="${price}"></th:block>
+            euros
+        </div>
+
+        <form th:method="post" th:action="@{'/payment'}">
+        <div>
+            <label for="name">First Name</label>
+            <input type="text" id="name" required>
+        </div>
+        <div>
+            <label for="surname">Last Name</label>
+            <input type="text" id="surname" required>
+        </div>
+        <div>
+            <label for="cardNumber">Credit Card Number</label>
+            <input type="text" id="cardNumber" required>
+        </div>
+        <div>
+            <label for="cardExpiration">Card Expiration</label>
+            <input type="text" id="cardExpiration" required>
+        </div>
+        <div>
+            <label for="securityCode">Security Code</label>
+            <input type="number" id="securityCode" required>
+        </div>
+
+
             <input type="submit" th:value="submit">
         </form>
     </div>
