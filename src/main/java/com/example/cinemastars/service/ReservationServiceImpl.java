@@ -34,4 +34,9 @@ public class ReservationServiceImpl implements ReservationService{
         Reservation reservation=new Reservation(user, seatList, projection, price);
         return reservationRepository.save(reservation);
     }
+
+    @Override
+    public List<Reservation> findByUser(User user) {
+        return reservationRepository.findAllByUser(user);
+    }
 }
