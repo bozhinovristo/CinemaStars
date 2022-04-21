@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>WP Exam</title>
+    <title>Cinema Stars</title>
 </head>
 <body>
-<!-- The form should submit to DiscussionController.create or DiscussionController.update,
-     depending on whether we are creating or editing an entity -->
+
 <form th:method="post" th:action="@{'/movies/{id}' (id=${movie?.id})}">
     <div>
         <label for="f1">Name</label>
@@ -49,8 +48,6 @@
     <div>
         <label>Genre</label><br/>
         <select id="f5" name="genreIds" multiple>
-            <!-- For each participant you should have one <option> like below  -->
-            <!--            <option> [participant.username]</option>-->
             <option th:if="${movie} == null"
                     th:each="genre: ${genres}"
                     th:value="${genre.getId()}"

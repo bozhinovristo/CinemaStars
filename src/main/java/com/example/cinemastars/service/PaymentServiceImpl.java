@@ -22,10 +22,11 @@ public class PaymentServiceImpl implements PaymentService{
     }
 
     @Override
-    public Payment save(String username, Long reservationId) {
+    public Payment save(String username, Long reservationId, String name, String surname, String cardNumber,
+                        String cardExpiration, Integer securityCode) {
         User user=userRepository.getById(username);
         Reservation reservation=reservationRepository.getById(reservationId);
-        Payment payment=new Payment(reservation, user);
+        Payment payment=new Payment(reservation, user, name, surname, cardNumber, cardExpiration, securityCode);
         return paymentRepository.save(payment);
     }
 }
