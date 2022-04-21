@@ -35,8 +35,12 @@ public class ProjectionController {
     }
 
     @PostMapping("/{id}/seats")
-    public String reserve(@PathVariable Long id, @RequestParam List<Integer> seat, HttpSession session, Model model)
+    public String reserve(@PathVariable Long id, @RequestParam(required = false) List<Integer> seat, HttpSession session, Model model)
     {
+        if(seat==null)
+        {
+            return "redirect:/projection/"+id;
+        }
         System.out.println(seat.toString());
         session.setAttribute("seats", seat);
         Projection projection= projectionService.findById(id);

@@ -69,7 +69,8 @@ public class DataInitializer {
             seats.add(i+10);
             seats.add(i+11);
             Reservation reservation=reservationService.save(user.getUsername(),seats, projection.getId(), 0.0);
-            paymentService.save(reservation.getUser().getUsername(), reservation.getId());
+            paymentService.save(reservation.getUser().getUsername(), reservation.getId(), "name",
+                   "surname", "123", "12/2025", 1234);
             reservation.getSeats().forEach(s-> {
                 s.setReserved(true);
                 seatService.save(s);

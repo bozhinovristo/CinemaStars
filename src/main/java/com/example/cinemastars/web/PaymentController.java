@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -29,7 +30,9 @@ public class PaymentController {
     }
 
     @PostMapping("")
-    public String reserve(HttpSession session, Model model)
+    public String reserve(HttpSession session, Model model, @RequestParam String name,
+                          @RequestParam String surname, @RequestParam String cardNumber,
+                          @RequestParam String cardExpiration, @RequestParam Integer securityCode)
     {
         List<Integer> seats= (List<Integer>) session.getAttribute("seats");
         Projection projection=(Projection) session.getAttribute("projection");
@@ -39,7 +42,8 @@ public class PaymentController {
             seatService.save(s);
         });
 
-        Payment payment=paymentService.save(reservation.getUser().getUsername(), reservation.getId());
+        Payment payment=paymentService.save(reservation.getUser().getUsername(), reservation.getId(), name, surname,
+                cardNumber, cardExpiration,securityCode);
 
         return "redirect:/movies";
     }
