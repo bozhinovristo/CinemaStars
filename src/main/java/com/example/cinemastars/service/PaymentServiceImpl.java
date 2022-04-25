@@ -29,4 +29,14 @@ public class PaymentServiceImpl implements PaymentService{
         Payment payment=new Payment(reservation, user, name, surname, cardNumber, cardExpiration, securityCode);
         return paymentRepository.save(payment);
     }
+
+    @Override
+    public Payment findByReservation(Reservation reservation) {
+        return paymentRepository.findByReservation(reservation).get();
+    }
+
+    @Override
+    public void delete(Payment payment) {
+        paymentRepository.delete(payment);
+    }
 }
