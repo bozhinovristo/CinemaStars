@@ -4,6 +4,12 @@
     <title>Cinema Stars</title>
 </head>
 <body>
+<li class="nav-item" sec:authorize="isAuthenticated()">
+    <a class="nav-link" href="#">
+        <th:block th:if="${#request.getRemoteUser() != null}"
+                  th:text="${#request.getRemoteUser()}"></th:block>
+    </a>
+</li>
 <div>
     <table>
         <tr>
@@ -15,6 +21,7 @@
             <th>Genre</th>
             <th>Seats</th>
             <th>Price</th>
+            <th></th>
         </tr>
         <tr class="item" th:each="reservation : ${reservations}">
             <td th:text="${reservation.projection.movie.getName()}"></td>
@@ -30,11 +37,11 @@
             </td>
             <td th:text="${reservation.price}"></td>
             <td>
-<!--                <th:block>-->
-<!--                    <form th:method="post" th:action="@{'/movies/{id}/delete' (id=${movie.getId()})}">-->
-<!--                        <button type="submit" class="delete-item">Delete</button>-->
-<!--                    </form>-->
-<!--                </th:block>-->
+                <th:block>
+                    <form th:method="post" th:action="@{'/cancellation/{id}' (id=${reservation.getId()})}">
+                        <button type="submit" class="delete-item">Cancel Reservation</button>
+                    </form>
+                </th:block>
             </td>
         </tr>
     </table>
