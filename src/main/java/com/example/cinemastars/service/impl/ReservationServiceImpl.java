@@ -1,15 +1,18 @@
-package com.example.cinemastars.service;
+package com.example.cinemastars.service.impl;
 
 import com.example.cinemastars.model.*;
 import com.example.cinemastars.repository.ReservationRepository;
 import com.example.cinemastars.repository.SeatRepository;
+import com.example.cinemastars.service.ProjectionService;
+import com.example.cinemastars.service.ReservationService;
+import com.example.cinemastars.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ReservationServiceImpl implements ReservationService{
+public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final UserService userService;

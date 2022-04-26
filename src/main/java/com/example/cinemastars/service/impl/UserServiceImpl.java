@@ -1,4 +1,4 @@
-package com.example.cinemastars.service;
+package com.example.cinemastars.service.impl;
 
 import com.example.cinemastars.model.Role;
 import com.example.cinemastars.model.User;
@@ -7,13 +7,14 @@ import com.example.cinemastars.model.exceptions.PasswordsDoNotMatchException;
 import com.example.cinemastars.model.exceptions.UsernameAlreadyExistsException;
 import com.example.cinemastars.repository.SeatRepository;
 import com.example.cinemastars.repository.UserRepository;
+import com.example.cinemastars.service.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 

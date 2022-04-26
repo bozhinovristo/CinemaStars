@@ -1,11 +1,12 @@
-package com.example.cinemastars.service;
+package com.example.cinemastars.service.impl;
 
 import com.example.cinemastars.model.Hall;
 import com.example.cinemastars.repository.HallRepository;
+import com.example.cinemastars.service.HallService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class HallServiceImpl implements HallService{
+public class HallServiceImpl implements HallService {
 
     private final HallRepository hallRepository;
 

@@ -1,14 +1,16 @@
-package com.example.cinemastars.service;
+package com.example.cinemastars.service.impl;
 
 import com.example.cinemastars.model.Movie;
 import com.example.cinemastars.model.Review;
 import com.example.cinemastars.repository.ReservationRepository;
 import com.example.cinemastars.repository.ReviewRepository;
+import com.example.cinemastars.service.MovieService;
+import com.example.cinemastars.service.ReviewService;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.spring5.expression.Mvc;
 
 @Service
-public class ReviewServiceImpl implements ReviewService{
+public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
     private final MovieService movieService;
 

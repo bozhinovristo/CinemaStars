@@ -1,14 +1,15 @@
-package com.example.cinemastars.service;
+package com.example.cinemastars.service.impl;
 
 import com.example.cinemastars.model.Genre;
 import com.example.cinemastars.model.exceptions.GenreDoesNotExistException;
 import com.example.cinemastars.repository.GenreRepository;
+import com.example.cinemastars.service.GenreService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class GenreServiceImpl implements GenreService{
+public class GenreServiceImpl implements GenreService {
 
     private final GenreRepository genreRepository;
 
