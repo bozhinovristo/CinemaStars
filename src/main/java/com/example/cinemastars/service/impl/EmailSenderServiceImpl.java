@@ -40,7 +40,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
 
         mimeMessageHelper.setFrom("cinemastars2022@gmail.com");
-        mimeMessageHelper.setTo("bozhinovristo@gmail.com");
+        mimeMessageHelper.setTo("anageorgieska@gmail.com");
         mimeMessageHelper.setText(body);
         mimeMessageHelper.setSubject(subject);
 

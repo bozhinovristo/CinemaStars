@@ -30,7 +30,7 @@ public class CinemaStarsApplication {
 
     @EventListener(ApplicationReadyEvent.class)
     public void sendMail() throws MessagingException {
-        senderService.sendEmail("bozhinovristo@gmail.com",
+        senderService.sendEmail("anageorgieska@gmail.com",
                 "Sample Subject", "This is the body of the email");
 
 //        senderService.sendEmailWithAttachment("bozhinovristo@gmail.com",
