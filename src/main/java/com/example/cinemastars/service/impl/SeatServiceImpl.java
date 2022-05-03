@@ -1,14 +1,15 @@
-package com.example.cinemastars.service;
+package com.example.cinemastars.service.impl;
 
 import com.example.cinemastars.model.Seat;
 import com.example.cinemastars.model.SeatId;
 import com.example.cinemastars.repository.SeatRepository;
+import com.example.cinemastars.service.SeatService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class SeatServiceImpl implements SeatService{
+public class SeatServiceImpl implements SeatService {
 
     private final SeatRepository seatRepository;
 

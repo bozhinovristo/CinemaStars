@@ -1,16 +1,18 @@
-package com.example.cinemastars.service;
+package com.example.cinemastars.service.impl;
 
 import com.example.cinemastars.model.Director;
 import com.example.cinemastars.model.Genre;
 import com.example.cinemastars.model.Movie;
 import com.example.cinemastars.repository.GenreRepository;
 import com.example.cinemastars.repository.MovieRepository;
+import com.example.cinemastars.service.DirectorService;
+import com.example.cinemastars.service.MovieService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class MovieServiceImpl implements MovieService{
+public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
     private final DirectorService directorService;

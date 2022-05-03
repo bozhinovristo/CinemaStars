@@ -1,7 +1,8 @@
-package com.example.cinemastars.service;
+package com.example.cinemastars.service.impl;
 
 import com.example.cinemastars.model.Director;
 import com.example.cinemastars.repository.DirectorRepository;
+import com.example.cinemastars.service.DirectorService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

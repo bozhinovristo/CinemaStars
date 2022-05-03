@@ -1,4 +1,4 @@
-package com.example.cinemastars.service;
+package com.example.cinemastars.service.impl;
 
 import com.example.cinemastars.model.Payment;
 import com.example.cinemastars.model.Reservation;
@@ -6,10 +6,11 @@ import com.example.cinemastars.model.User;
 import com.example.cinemastars.repository.PaymentRepository;
 import com.example.cinemastars.repository.ReservationRepository;
 import com.example.cinemastars.repository.UserRepository;
+import com.example.cinemastars.service.PaymentService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PaymentServiceImpl implements PaymentService{
+public class PaymentServiceImpl implements PaymentService {
 
     private final PaymentRepository paymentRepository;
     private final UserRepository userRepository;

@@ -1,9 +1,10 @@
-package com.example.cinemastars.service;
+package com.example.cinemastars.service.impl;
 
 import com.example.cinemastars.model.User;
 import com.example.cinemastars.model.exceptions.InvalidArgumentsException;
 import com.example.cinemastars.model.exceptions.InvalidUserCredentialsException;
 import com.example.cinemastars.repository.UserRepository;
+import com.example.cinemastars.service.AuthService;
 import org.springframework.stereotype.Service;
 
 @Service
