@@ -6,6 +6,7 @@ import com.example.cinemastars.model.Projection;
 import com.example.cinemastars.service.GenreService;
 import com.example.cinemastars.service.MovieService;
 import com.example.cinemastars.service.ProjectionService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -49,6 +50,7 @@ public class MovieController {
     }
 
     @GetMapping("/movies/add")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String showAdd(Model model) {
         List<Genre> genres=genreService.findAll();
         model.addAttribute("genres", genres);
@@ -56,6 +58,7 @@ public class MovieController {
     }
 
     @GetMapping("/movies/{id}/edit")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String showEdit(@PathVariable Long id, Model model) {
         Movie movie=movieService.findById(id);
         model.addAttribute("movie", movie);

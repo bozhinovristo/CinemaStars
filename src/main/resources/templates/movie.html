@@ -1,75 +1,157 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="apple-touch-icon" sizes="180x180" th:href="@{/favicon/apple-touch-icon.png}">
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/favicon/favicon-32x32.png}">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/favicon/favicon-16x16.png}">
+    <link rel="manifest" th:href="@{/favicon/site.webmanifest}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <!--    <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet">-->
+    <!--    <script th:src="@{/bootstrap/js/bootstrap.bundle.js}"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/jqc-1.12.4/dt-1.11.5/r-2.2.9/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jqc-1.12.4/dt-1.11.5/r-2.2.9/datatables.min.js"></script>
+    <script th:src="@{/scripts/dataTables.js}"></script>
+    <script th:src="@{/scripts/datetime-format.js}"></script>
     <title>Cinema Stars</title>
 </head>
 <body>
-<nav>
-    <a th:href="@{/movies}">Movies</a>
-</nav>
-<div>
-    <table>
-        <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Director</th>
-            <th>Duration</th>
-            <th>Genre</th>
-        </tr>
-        <tr class="item" >
-            <td><img th:src="@{'/pictures/{name}'(name=${movie.getImageUrl()})}" height="100px"></td>
-            <td th:text="${movie.getName()}"></td>
-            <td th:text="${movie.getDirector().toString()}"></td>
-            <td th:text="${movie.getDuration()}"></td>
-            <td>
-                <span class="item-rel" th:each="genre : ${movie.getGenre()}"> <th:block th:text="${genre.getName()}"/></span>
-            </td>
-        </tr>
-    </table>
-
-</div>
-<div>
-    <table>
-        <tr>
-            <th>Date & Time</th>
-            <th>Hall</th>
-            <th>Price</th>
-        </tr>
-        <tr class="item" th:each="proj :${projections}">
 
 
-            <td >
-                <a  th:href="@{'/projection/{id}' (id=${proj.getId()})}">
-                <th:block th:text="${proj.getTimestamp()}"/>
-                </a>
-            </td>
+<header>
 
-            <td th:text="${proj.getHall().getName()}"></td>
-            <td th:text="${proj.getPrice()}"></td>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container container-fluid">
+            <a th:href="@{/movies}" class="navbar-brand">
+                <!--                <img th:src="@{/img/logo_inverted.png}" height="60" alt="cinema-stars-logo"/>-->
+                <!--                <img src="../img/logo_inverted.png" height="60" alt="cinema-stars-logo"/>-->
+                <img src="/img/logo_inverted.png" height="60" alt="cinema-stars-logo"/></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse fs-5" id="navbarToggle">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item p-1"><a class="nav-link text-white" th:href="@{/movies}">Movies</a></li>
+                    <li class="nav-item p-1"><a class="nav-link text-white" th:href="@{/catalog}">Catalog</a></li>
+                    <li class="nav-item p-1" sec:authorize="isAuthenticated()"><a class="nav-link text-white" th:href="@{/cancellation}">Reservations</a></li>
+                </ul>
+                <ul class="navbar-nav d-flex">
+                    <li class="nav-item p-1" sec:authorize="isAuthenticated()">
+                        <a class="nav-link fs-6" href="#">
+                            <th:block th:if="${#request.getRemoteUser() != null}"
+                                      th:text="${#request.getRemoteUser()}"></th:block>
+                        </a>
+                    </li>
 
-            <!--            <td>-->
-            <!--                <th:block>-->
-            <!--                    &lt;!&ndash; DiscussionController.delete (Only MASTER can see this element)&ndash;&gt;-->
-            <!--                    <form th:method="post" th:action="@{'/discussions/{id}/delete' (id=${dis.getId()})}"-->
-            <!--                          sec:authorize="hasRole('ROLE_MASTER')">-->
-            <!--                        <button type="submit" class="delete-item">Delete</button>-->
-            <!--                    </form>-->
-            <!--                    &lt;!&ndash; DiscussionController.showEdit (Only MASTER can see this element)&ndash;&gt;-->
-            <!--                    <a class="edit-item" th:href="@{'/discussions/{id}/edit' (id=${dis.getId()})}"-->
-            <!--                       sec:authorize="hasRole('ROLE_MASTER')">Edit</a>-->
+                    <li class="nav-item p-1"><a class="btn btn-secondary" href="/register">Register</a></li>
 
-            <!--                </th:block>-->
-            <!--                &lt;!&ndash; DiscussionController.markPopular (Visible only when the discussion is not already popular)&ndash;&gt;-->
-            <!--                <form th:method="post" th:action="@{'/discussions/{id}/mark_popular' (id=${dis.getId()})}"-->
-            <!--                      th:if="${dis.getPopular()==false}"-->
-            <!--                >-->
-            <!--                    <button class="change-item">Mark as popular</button>-->
-            <!--                </form>-->
-            <!--            </td>-->
+                    <li class="nav-item p-1" sec:authorize="isAuthenticated()">
+                        <a class="btn btn-warning text-dark opacity-75" href="/logout">Logout</a>
+                    </li>
+                    <li class="nav-item p-1" sec:authorize="!isAuthenticated()">
+                        <a class="btn btn-success" href="/login">Login</a>
+                    </li>
 
-        </tr>
-    </table>
+                    <!--                    <li class="nav-item p-1"><a class="btn btn-success" href="/login">Login</a></li>-->
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-</div>
+</header>
+
+
+<section>
+
+    <div class="container my-3">
+        <h3>Projections for movie:</h3>
+        <div class="container my-3">
+            <div class="row d-flex flex-row justify-content-evenly flex-wrap align-content-stretch">
+                <div class="card mb-4" style="max-width: 510px;">
+                    <div class="row g-0 p-3">
+                        <div class="col-md-6">
+                            <img th:src="${movie.getImageUrl()}" alt="movie-poster">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <th:block th:text="${movie.getName()}"></th:block>
+                                </h5>
+                                <h6 class="card-subtitle pb-1">
+                                    <span class="item-rel" th:each="genre : ${movie.getGenre()}">
+                                        <th:block th:text="${genre.getName()}"/></span>
+                                </h6>
+                                <p><span class="fw-bold">Director: </span>
+                                    <span class="card-text" th:text="${movie.getDirector().toString()}"></span>
+                                    <br>
+                                    <span class="fw-bold">Duration: </span>
+                                    <span class="card-text" th:text="${movie.getDuration()}"></span><span> min</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="container">
+
+        <div class="table-responsive ">
+            <table class="table table-hover">
+                <tr class="table-light">
+                    <th>Date & Time</th>
+                    <th>Hall</th>
+                    <th>Price</th>
+                    <th></th>
+                </tr>
+                <tr class="item" th:each="proj :${projections}">
+                    <td class="timestamp">
+                        <th:block th:text="${proj.getTimestamp()}"/>
+                    </td>
+                    <td th:text="${proj.getHall().getName()}"></td>
+                    <td><p><span th:text="${proj.getPrice()}"></span>&euro;</p></td>
+                    <td><th:block sec:authorize="isAuthenticated()">
+                        <a class="btn btn-success" th:href="@{'/projection/{id}' (id=${proj.getId()})}">
+                            Get tickets</a></th:block>
+                        <th:block sec:authorize="!isAuthenticated()">
+                            <a class="btn btn-success" th:href="@{'/login'}">
+                                Get tickets</a></th:block>
+                        </th:block>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+    </div>
+
+    </div>
+</section>
+
+
+
+<footer class="footer bg-light">
+    <div class="container d-flex flex-row flex-wrap justify-content-center align-content-center" style="height: 300px">
+        <div>
+            <img src="/img/logo.png" height="150" alt="cinema-stars-logo"/>
+            <h5>Get tickets for your favourite movies!</h5>
+            <p>Contact us here:
+                <a href="mailto:" class="text-decoration-none link-info fw-bold">cinemastars2022@gmail.com</a>
+                <br><span class="mx-5">Copyright &copy; Cinema Stars 2022</span>
+            </p>
+        </div>
+    </div>
+</footer>
+
+
+
+
+
 </body>
 </html>

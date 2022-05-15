@@ -113,7 +113,7 @@ public class DataInitializer {
                 "Robert",
                 "Zemeckis",
                 Stream.of(genreService.findByName("Drama").getId()).collect(Collectors.toList()),
-                "Flight.jpg"
+                "https://upload.wikimedia.org/wikipedia/en/0/0e/Flight_film_poster.jpg"
         );
         this.movieService.save(
                 "Everest" ,
@@ -121,7 +121,7 @@ public class DataInitializer {
                 "Baltasar",
                 "Kormakur",
                 Stream.of(genreService.findByName("Action").getId(),genreService.findByName("Adventure").getId()).collect(Collectors.toList()),
-                    "Everest.jpg"        );
+                "https://upload.wikimedia.org/wikipedia/en/thumb/2/28/Everest_poster.jpg/220px-Everest_poster.jpg"        );
         this.movieService.save(
                 "The tourist" ,
                 103,
@@ -129,7 +129,7 @@ public class DataInitializer {
                 "Henckel von Donnersmarck",
                 Stream.of(genreService.findByName("Mystery").getId(),genreService.findByName("Action").getId(),
                         genreService.findByName("Adventure").getId()).collect(Collectors.toList()),
-                "The tourist.jpg"
+                "https://upload.wikimedia.org/wikipedia/en/thumb/2/28/The_Tourist_Poster.jpg/220px-The_Tourist_Poster.jpg"
         );
     }
 }

@@ -25,7 +25,7 @@ public class CancellationListener {
         Reservation reservation=event.reservation;
         StringBuilder stringBuilder=new StringBuilder();
         String reservationInfo=stringBuilder
-                .append("This reservation is canceled!").append("\n")
+                .append("This reservation is cancelled!").append("\n")
                 .append("Name: ").append(reservation.getProjection().getMovie().getName()).append("\n")
                 .append("Date and time: ").append(reservation.getProjection().getTimestamp()).append("\n")
                 .append("Hall: ").append(reservation.getProjection().getHall().getName()).append("\n")
