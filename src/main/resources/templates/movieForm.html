@@ -1,79 +1,162 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="apple-touch-icon" sizes="180x180" th:href="@{/favicon/apple-touch-icon.png}">
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/favicon/favicon-32x32.png}">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/favicon/favicon-16x16.png}">
+    <link rel="manifest" th:href="@{/favicon/site.webmanifest}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <!--    <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet">-->
+    <!--    <script th:src="@{/bootstrap/js/bootstrap.bundle.js}"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/jqc-1.12.4/dt-1.11.5/r-2.2.9/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jqc-1.12.4/dt-1.11.5/r-2.2.9/datatables.min.js"></script>
+    <script th:src="@{/scripts/dataTables.js}"></script>
+    <script th:src="@{/scripts/datetime-format.js}"></script>
     <title>Cinema Stars</title>
 </head>
 <body>
 
-<form th:method="post" th:action="@{'/movies/{id}' (id=${movie?.id})}">
-    <div>
-        <label for="f1">Name</label>
-        <input type="text"
-               id="f1"
-               name="name"
-               th:value="(${movie} != null ? ${movie.getName()} : '')"
-               required>
-    </div>
-    <div>
-        <label for="f2">Duration</label>
-        <input type="number"
-               id="f2"
-               name="duration"
-               th:value="(${movie} != null ? ${movie.getDuration()} : '')"
-               required>
-    </div>
-    <div>
-        <label for="f6">Director Name</label>
-        <input type="text"
-               id="f6"
-               name="directorName"
-               th:value="(${movie} != null ? ${movie.getDirector().getName()} : '')"
-               required>
-    </div>
-    <div>
-        <label for="f11">Director Surname</label>
-        <input type="text"
-               id="f11"
-               name="directorSurname"
-               th:value="(${movie} != null ? ${movie.getDirector().getSurname()} : '')"
-               required>
-    </div>
-    <div>
-        <label for="f12">Image</label>
-        <input type="text"
-               id="f12"
-               name="imageUrl"
-               th:value="(${movie} != null ? ${movie.getImageUrl()} : '')">
-    </div>
-    <div>
-        <label>Genre</label><br/>
-        <select id="f5" name="genreIds" multiple>
-            <option th:if="${movie} == null"
-                    th:each="genre: ${genres}"
-                    th:value="${genre.getId()}"
-                    th:text="${genre.getName()}">
-            </option>
-            <option th:if="${movie} != null"
-                    th:each="genre: ${genres}"
-                    th:selected="${movie.getGenre().contains(genre)}"
-                    th:value="${genre.getId()}"
-                    th:text="${genre.getName()}">
-            </option>
-        </select>
+
+<header>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container container-fluid">
+            <a th:href="@{/movies}" class="navbar-brand">
+                <!--                <img th:src="@{/img/logo_inverted.png}" height="60" alt="cinema-stars-logo"/>-->
+                <!--                <img src="../img/logo_inverted.png" height="60" alt="cinema-stars-logo"/>-->
+                <img src="/img/logo_inverted.png" height="60" alt="cinema-stars-logo"/></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse fs-5" id="navbarToggle">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item p-1"><a class="nav-link text-white" th:href="@{/movies}">Movies</a></li>
+                    <li class="nav-item p-1"><a class="nav-link text-white" th:href="@{/catalog}">Catalog</a></li>
+                    <li class="nav-item p-1" sec:authorize="isAuthenticated()"><a class="nav-link text-white" th:href="@{/cancellation}">Reservations</a></li>
+                </ul>
+                <ul class="navbar-nav d-flex">
+                    <li class="nav-item p-1" sec:authorize="isAuthenticated()">
+                        <a class="nav-link fs-6" href="#">
+                            <th:block th:if="${#request.getRemoteUser() != null}"
+                                      th:text="${#request.getRemoteUser()}"></th:block>
+                        </a>
+                    </li>
+
+                    <li class="nav-item p-1"><a class="btn btn-secondary" href="/register">Register</a></li>
+
+                    <li class="nav-item p-1" sec:authorize="isAuthenticated()">
+                        <a class="btn btn-warning text-dark opacity-75" href="/logout">Logout</a>
+                    </li>
+                    <li class="nav-item p-1" sec:authorize="!isAuthenticated()">
+                        <a class="btn btn-success" href="/login">Login</a>
+                    </li>
+
+                    <!--                    <li class="nav-item p-1"><a class="btn btn-success" href="/login">Login</a></li>-->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+</header>
+
+<section>
+
+    <div class="container my-3">
+        <h3>Movie details</h3>
+        <div class="d-flex flex-row flex-wrap justify-content-center align-content-center">
+            <div class="w-75">
+
+                <form th:method="post" th:action="@{'/movies/{id}' (id=${movie?.id})}" class="mt-2">
+                    <div class="mb-3">
+                        <label for="f1" class="fw-bold">Movie Name</label>
+                        <input type="text"
+                               id="f1"
+                               name="name"
+                               th:value="(${movie} != null ? ${movie.getName()} : '')"
+                               required
+                               class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="f2" class="fw-bold">Duration</label>
+                        <input type="number"
+                               id="f2"
+                               name="duration"
+                               th:value="(${movie} != null ? ${movie.getDuration()} : '')"
+                               required
+                               class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="f6" class="fw-bold">Director Name</label>
+                        <input type="text"
+                               id="f6"
+                               name="directorName"
+                               th:value="(${movie} != null ? ${movie.getDirector().getName()} : '')"
+                               required
+                               class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="f11" class="fw-bold">Director Surname</label>
+                        <input type="text"
+                               id="f11"
+                               name="directorSurname"
+                               th:value="(${movie} != null ? ${movie.getDirector().getSurname()} : '')"
+                               required
+                               class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="f12" class="fw-bold">Image</label>
+                        <input type="text"
+                               id="f12"
+                               name="imageUrl"
+                               th:value="(${movie} != null ? ${movie.getImageUrl()} : '')"
+                               class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="fw-bold">Genre</label><br/>
+                        <select id="f5" name="genreIds" multiple class="form-control">
+                            <option th:if="${movie} == null"
+                                    th:each="genre: ${genres}"
+                                    th:value="${genre.getId()}"
+                                    th:text="${genre.getName()}">
+                            </option>
+                            <option th:if="${movie} != null"
+                                    th:each="genre: ${genres}"
+                                    th:selected="${movie.getGenre().contains(genre)}"
+                                    th:value="${genre.getId()}"
+                                    th:text="${genre.getName()}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <button id="submit" type="submit" class="btn btn-success">Save</button>
+                    <a id="back" href="/catalog" type="button" class="btn btn-outline-secondary">Back to catalog</a>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <button id="submit" type="submit">Submit</button>
-    <a id="back" href="/movies" type="button" class="btn btn-primary">Back to movies</a>
-</form>
 
-<div>
-    <ul id="nav">
-        <li><a href="/">Home</a></li>
-        <li><a href="/login">Login</a></li>
-        <li><a href="/logout">Logout</a></li>
-        <input type="hidden" id="f3" value="f3" required>
-    </ul>
-</div>
+</section>
+
+
+
+<footer class="footer bg-light">
+    <div class="container d-flex flex-row flex-wrap justify-content-center align-content-center" style="height: 300px">
+        <div>
+            <img src="/img/logo.png" height="150" alt="cinema-stars-logo"/>
+            <h5>Get tickets for your favourite movies!</h5>
+            <p>Contact us here:
+                <a href="mailto:" class="text-decoration-none link-info fw-bold">cinemastars2022@gmail.com</a>
+                <br><span class="mx-5">Copyright &copy; Cinema Stars 2022</span>
+            </p>
+        </div>
+    </div>
+</footer>
+
 
 </body>
 </html>
